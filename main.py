@@ -10,6 +10,9 @@ def main():
     orders = process_data()
     # Print a short summary
     print(f"Loaded {len(orders)} orders")
+    # Run threaded simulation (if any orders present)
+    if orders:
+        process_orders_threaded(orders)
 
 
 def process_data():
@@ -38,6 +41,30 @@ def process_data():
 
     # Calculate simple report values (not printed here)
     return orders
+
+
+def process_order(order, worker_id):
+    """Simulate a worker processing an order (tiny delay)."""
+    import time, random
+
+    time.sleep(random.uniform(0.05, 0.15))
+    print(f"Worker-{worker_id} processed Order {order['order_id']}: {order['product']} x{order['quantity']}")
+
+
+def process_orders_threaded(orders):
+    """Process a list of orders concurrently using threads."""
+    import threading
+
+    threads = []
+    for i, order in enumerate(orders):
+        t = threading.Thread(target=process_order, args=(order, i+1))
+        threads.append(t)
+        t.start()
+
+    for t in threads:
+        t.join()
+
+    print("All orders processed (threaded).")
 
 
 if __name__ == "__main__":
