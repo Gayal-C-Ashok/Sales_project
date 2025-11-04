@@ -1,0 +1,6 @@
+order_id,product,quantity,price,region
+101,Laptop,2,50000,South
+102,Mouse,5,400,North
+103,Laptop,1,48000,West
+104,Keyboard,3,800,South
+105,Mouse,10,380,East
